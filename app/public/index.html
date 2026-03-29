@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Notes App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    input {
+      width: 70%;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    li {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Notes App</h1>
+    <input type="text" id="noteInput" placeholder="Enter note" />
+    <button onclick="addNote()">Add</button>
+
+    <h2>Saved Notes</h2>
+    <ul id="notesList"></ul>
+  </div>
+
+  <script>
+    async function fetchNotes() {
+      const res = await fetch("/notes");
+      const notes = await res.json();
+      const list = document.getElementById("notesList");
+      list.innerHTML = "";
+
+      notes.forEach(note => {
+        const li = document.createElement("li");
+        li.textContent = note.text;
+        list.appendChild(li);
+      });
+    }
+
+    async function addNote() {
+      const input = document.getElementById("noteInput");
+      const text = input.value.trim();
+
+      if (!text) return;
+
+      await fetch("/notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
+      });
+
+      input.value = "";
+      fetchNotes();
+    }
+
+    fetchNotes();
+  </script>
+</body>
+</html>
+

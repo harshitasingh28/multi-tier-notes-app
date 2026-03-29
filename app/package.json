@@ -1,16 +1,13 @@
 {
-  "name": "app",
+  "name": "notes-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Simple multi-tier notes app",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
-    "mongodb": "^7.1.1"
+    "express": "^5.1.0",
+    "mongodb": "^6.20.0"
   }
 }
